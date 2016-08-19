@@ -12,6 +12,6 @@ import org.junit.Test;
 public class IndexBuilderTest {
     @Test
     public void testIndexBuilder(){
-        
+
     }
 }

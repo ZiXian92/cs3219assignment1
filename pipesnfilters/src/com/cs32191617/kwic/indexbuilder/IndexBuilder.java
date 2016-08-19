@@ -1,6 +1,9 @@
 package com.cs32191617.kwic.indexbuilder;
 
-import java.util.ArrayList;
+import com.cs32191617.kwic.components.Alphabetizer;
+import com.cs32191617.kwic.components.CircularShifter;
+import com.cs32191617.kwic.components.Filter;
+
 import java.util.Arrays;
 import java.util.stream.Collectors;
 import java.util.TreeSet;
@@ -9,6 +12,9 @@ import java.util.TreeSet;
  * Created by zixian on 8/18/16.
  */
 public class IndexBuilder {
+    private Alphabetizer alphabetizer;
+    private CircularShifter shifter;
+    private Filter indexFilter;
     private TreeSet<String> sortedIndexes, wordsToIgnore;
 
     /**
@@ -16,6 +22,9 @@ public class IndexBuilder {
      * @param wordsToIgnore The list of words to ignore in the inputs, case-insensitive
      */
     public IndexBuilder(String[] wordsToIgnore){
+        this.alphabetizer = new Alphabetizer(wordsToIgnore);
+        this.shifter = new CircularShifter();
+        this.indexFilter = new Filter(wordsToIgnore);
         this.sortedIndexes = new TreeSet<String>();
         this.wordsToIgnore = new TreeSet<String>(Arrays.stream(wordsToIgnore).map(word -> word.toLowerCase()).sorted().collect(Collectors.toList()));
     }
@@ -28,8 +37,16 @@ public class IndexBuilder {
      */
     public boolean generateAndAddIndexes(String input){
 
+        // Generates a stream and passes it through a pipeline of filters
+        Arrays.stream(new String[]{input})
+        .map(str -> this.alphabetizer.alphabetize(str))
+        .flatMap(str -> this.shifter.generateIndexes(str).stream())
+        .filter(index -> this.indexFilter.isKeywordIndex(index))
+        .forEach(index -> this.sortedIndexes.add(index));
+
         // This implementation works according to defined requirements specifications
         // but is not modularized nor is each step of the pipe easily testable.
+        // For implementation reference when implementing the components.
 //        ArrayList<String> arr = new ArrayList<String>();
 //        arr.add(input);
 //        arr.stream().flatMap(originalStr -> {
