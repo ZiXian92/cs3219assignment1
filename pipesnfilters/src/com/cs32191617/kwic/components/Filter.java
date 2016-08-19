@@ -3,7 +3,6 @@ package com.cs32191617.kwic.components;
 import java.util.Arrays;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Created by zixian on 8/19/16.
@@ -24,7 +23,7 @@ public class Filter {
      * @return True if str does not start with any of the words supplied in the constructor, false otherwise
      */
     public boolean isKeywordIndex(String str){
-        // To be implemented
-        return true;
+        String firstWord = str.split("\\s+", 2)[0].toLowerCase();
+        return !this.wordsToIgnore.contains(firstWord);
     }
 }
