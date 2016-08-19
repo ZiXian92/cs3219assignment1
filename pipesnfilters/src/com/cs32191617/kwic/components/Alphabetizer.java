@@ -21,6 +21,12 @@ public class Alphabetizer {
      * @return The alphabetized string
      */
     public String alphabetize(String str){
-        return str;
+        return Arrays.stream(str.split("\\s+"))
+                .map(word -> {
+                    if(word.isEmpty() || this.wordsToIgnore.contains(word.toLowerCase())) return word;
+                    char[] letters = word.toCharArray();
+                    letters[0] = Character.toUpperCase(letters[0]);
+                    return new String(letters);
+                }).collect(Collectors.joining(" "));
     }
 }
