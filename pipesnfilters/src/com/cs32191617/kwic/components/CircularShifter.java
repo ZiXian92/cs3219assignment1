@@ -13,7 +13,7 @@ public class CircularShifter {
      * @return A list of all generated indexes for the given input
      */
     public List<String> generateIndexes(String str){
-        String[] wordList = str.split("\\s");
+        String[] wordList = str.split("\\s+");
         ArrayList<String> indexList= new ArrayList<String>();
         String currentShift;
         for (int i=0; i<wordList.length; i++) {
