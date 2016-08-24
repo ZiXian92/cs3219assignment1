@@ -28,6 +28,7 @@ public class KeywordBuilder implements Subscriber {
         this.shifter = new CircularShifter();
         this.filter = new Filter(ignoreList);
         this.store = new TreeSet<String>();
+        Dispatcher.getInstance().subscribeTo(ActionTypes.KWIC_TEXT_INPUT, this);
     }
 
     @Override

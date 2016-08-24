@@ -19,7 +19,6 @@ public class Main {
         try(InputReader reader = new InputReader(); OutputFormatter writer = new OutputFormatter()){
 
             // Read in words to ignore
-            System.out.println("Enter list of words to ignore(comma-separated):");
             input = reader.readInputLine();
             if(input!=null){
                 // Process the words to ignore by creating the keyword builder
