@@ -8,10 +8,10 @@ import java.util.stream.Collectors;
 /**
  * Created by zixian on 8/19/16.
  */
-public class Alphabetizer {
+public class Capitalizer {
     private TreeSet<String> wordsToIgnore;
 
-    public Alphabetizer(List<String> ignoreList){
+    public Capitalizer(List<String> ignoreList){
         this.wordsToIgnore = ignoreList.stream().collect(Collectors.toCollection(() -> new TreeSet<String>()));
     }
 
