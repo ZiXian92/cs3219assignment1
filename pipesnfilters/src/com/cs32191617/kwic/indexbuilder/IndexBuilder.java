@@ -35,7 +35,7 @@ public class IndexBuilder {
      * @param input The input for which to generate indexes for
      * @return true if the operaiion is successful and false otherwise
      */
-    public boolean generateAndAddIndexes(String input){
+    public void generateAndAddIndexes(String input){
 
         // Generates a stream and passes it through a pipeline of filters
         Arrays.stream(new String[]{input})
@@ -43,33 +43,6 @@ public class IndexBuilder {
         .flatMap(str -> this.shifter.generateIndexes(str).stream())
         .filter(index -> this.indexFilter.isKeywordIndex(index))
         .forEach(index -> this.sortedIndexes.add(index));
-
-        // This implementation works according to defined requirements specifications
-        // but is not modularized nor is each step of the pipe easily testable.
-        // For implementation reference when implementing the components.
-//        ArrayList<String> arr = new ArrayList<String>();
-//        arr.add(input);
-//        arr.stream().flatMap(originalStr -> {
-//            // Alphabetizing
-//            ArrayList<String> words = new ArrayList<String>(Arrays.stream(originalStr.split("\\s+")).map(word -> {
-//                if(this.wordsToIgnore.contains(word.toLowerCase())) return word;
-//                char[] letters = word.toCharArray();
-//                letters[0] = Character.toUpperCase(letters[0]);
-//                return new String(letters);
-//            }).collect(Collectors.toList()));
-//
-//            // Circular Shifting
-//            int numWords = words.size();
-//            ArrayList<String> outputArr = new ArrayList<String>();
-//            for(int i=0; i<numWords; i++){
-//                outputArr.add(words.stream().collect(Collectors.joining(" ")).toString());
-//                words.add(words.get(0));
-//                words.remove(0);
-//            }
-//            return outputArr.stream();
-//        }).filter(index -> !this.wordsToIgnore.contains(index.split("\\s+", 2)[0].toLowerCase()))   // Filtering
-//        .forEach(index -> this.sortedIndexes.add(index));   // Accumulating
-        return true;
     }
 
     /**
