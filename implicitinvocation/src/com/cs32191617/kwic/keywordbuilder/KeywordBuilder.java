@@ -41,6 +41,12 @@ public class KeywordBuilder implements Subscriber {
         }
     }
 
+    /**
+     * Given the input string, generates and adds to internal storage
+     * all possible circular-shifted keywords that do not start with any of
+     * the words to ignore.
+     * @param input The input string to generate keywords for
+     */
     public void generateAndAddKeywords(String input){
         Arrays.stream(new String[]{input})
                 .map(phrase -> this.capitalizer.alphabetize(phrase))

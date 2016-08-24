@@ -16,6 +16,15 @@ public class OutputFormatter implements Closeable {
     }
 
     /**
+     * Prints the given message
+     * @param msg The message to print
+     */
+    public void printMessage(String msg){
+        this.writer.println(msg);
+        this.writer.flush();
+    }
+
+    /**
      * Writes the given list of strings to the output
      * @param list The list of strings to be written
      */

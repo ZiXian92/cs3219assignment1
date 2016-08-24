@@ -19,12 +19,14 @@ public class Main {
         try(InputReader reader = new InputReader(); OutputFormatter writer = new OutputFormatter()){
 
             // Read in words to ignore
+            writer.printMessage("Enter list of words to ignore(comma-separated):");
             input = reader.readInputLine();
             if(input!=null){
                 // Process the words to ignore by creating the keyword builder
                 keywordBuilder = new KeywordBuilder(input);
 
-                System.out.println("Enter phrases, 1 on each line. Terminate by entering Ctrl+D");
+                // Prompt user to input phrases
+                writer.printMessage("Enter phrases, 1 on each line. Terminate by entering Ctrl+D");
 
                 // Keep reading inputs and generating indexes
                 input = reader.readInputLine();
