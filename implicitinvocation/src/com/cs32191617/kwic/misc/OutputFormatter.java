@@ -1,5 +1,7 @@
 package com.cs32191617.kwic.misc;
 
+import com.cs32191617.kwic.exceptions.OutputFileException;
+
 import java.io.*;
 import java.util.List;
 
@@ -9,17 +11,37 @@ import java.util.List;
  * Defines the output formatter component
  */
 public class OutputFormatter implements Closeable {
-    private PrintWriter writer;
+    private PrintWriter writer, consoleWriter;
 
+    /**
+     * Creates a new output formatter that writes to the console.
+     */
     public OutputFormatter(){
-        this.writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
+        this.consoleWriter = this.writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
     }
 
     /**
-     * Prints the given message
+     * Creates a new output formatter that writes to the specified file.
+     * Any missing directories in the file path will be created.
+     * @param outputFileName Relative path to the output file
+     */
+    public OutputFormatter(String outputFileName) throws OutputFileException {
+        try {
+            File oFile = new File(outputFileName);
+            oFile.getParentFile().mkdirs();
+            oFile.createNewFile();
+            this.writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(oFile))));
+            this.consoleWriter = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
+        } catch(Exception e){
+            throw new OutputFileException();
+        }
+    }
+
+    /**
+     * Prints the given message to console
      * @param msg The message to print
      */
-    public void printMessage(String msg){
+    public void writeToConsole(String msg){
         this.writer.println(msg);
         this.writer.flush();
     }
