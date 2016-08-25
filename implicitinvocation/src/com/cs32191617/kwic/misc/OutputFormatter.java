@@ -42,8 +42,8 @@ public class OutputFormatter implements Closeable {
      * @param msg The message to print
      */
     public void writeToConsole(String msg){
-        this.writer.println(msg);
-        this.writer.flush();
+        this.consoleWriter.println(msg);
+        this.consoleWriter.flush();
     }
 
     /**
@@ -58,5 +58,6 @@ public class OutputFormatter implements Closeable {
     @Override
     public void close() throws IOException {
         this.writer.close();
+        if(this.consoleWriter!=this.writer) this.consoleWriter.close();
     }
 }
